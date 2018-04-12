@@ -1,38 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-    <title>PrimeFaces Hello World Example</title>
-</h:head>
-
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
 <h:body>
-    <h:form id="hello-world">
 
-        <p:panel header="PrimeFaces Hello World Example">
-            <h:panelGrid columns="2" cellpadding="4">
-                <h:outputText value="First Name: " />
-                <p:inputText id="first-name" value="#{candidateView.candidate.firstName}" />
+    <ui:composition template="template/common/commonLayout.xhtml">
+        <ui:define name="content">
+            <p:dataTable id="candidatesTable"
+                         var="candidate"
+                         value="#{candidateView.candidates}"
+                         selectionMode="single"
+                         selection="#{candidateView.selectedCandidate}" rowKey="#{candidate.id}">
+                <f:facet name="header">
+                    Candidates
+                </f:facet>
+                <p:column headerText="Id">
+                    <h:outputText value="#{candidate.id}"/>
+                </p:column>
+                <p:column headerText="First Name">
+                    <h:outputText value="#{candidate.firstName}"/>
+                </p:column>
+                <p:column headerText="Last Name">
+                    <h:outputText value="#{candidate.lastName}"/>
+                </p:column>
+                <p:column headerText="Country">
+                    <h:outputText value="#{candidate.contact.country}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton process="candidatesTable"
+                                     update=":form:editCandidate" icon="fa-edit fa fa-fw"
+                                     value="Edit"/>
+                    <p:commandButton process="candidatesTable"
+                                     actionListener="#{candidateView.deleteCandidate}"
+                                     update=":form:candidatesTable,:form:growl" icon="fa-trash fa fa-fw"
+                                     value="Delete"/>
+                </f:facet>
+            </p:dataTable>
+            <p:separator style="margin:30px"/>
+            <p:panel id="editCandidate"
+                     header="#{empty candidateView.selectedCandidate.id ? 'New Candidate' : 'Update Candidate'}">
 
-                <h:outputText value="Last Name: " />
-                <p:inputText id="last-name" value="#{candidateView.candidate.lastName}" />
 
-                <p:commandButton id="submit" value="Submit" update="greeting"
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputText value="First Name:*"/>
+                    <p:inputText id="first-name" value="#{candidateView.selectedCandidate.firstName}"
+                                 required="true"
+                                 requiredMessage="First Name is Mandatory!"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputText value="Last Name:*"/>
+                    <p:inputText id="last-name" value="#{candidateView.selectedCandidate.lastName}"
+                                 required="true"
+                                 requiredMessage="Last Name is Mandatory!"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputText value="Country:"/>
+                    <p:inputText id="country" value="#{candidateView.selectedCandidate.contact.country}"/>
+                </h:panelGrid>
+                <p:commandButton id="submit" value="Save" update=":form:candidatesTable,:form:growl,editCandidate"
+                                 icon="fa-save fa fa-fw"
+                                 partialSubmit="true"
+                                 process=":form:editCandidate"
                                  actionListener="#{candidateView.saveCandidate}"
-                                 oncomplete="PF('greetingDialog').show()" />
-            </h:panelGrid>
-        </p:panel>
+                >
+                </p:commandButton>
+                <p:commandButton value="Reset" update="editCandidate" process="@this" style="margin-left:20px;">
+                    <p:resetInput target="editCandidate"/>
+                </p:commandButton>
+                <p:commandButton value="New Candidate" update="editCandidate" process="@this" rendered="#{not empty candidateView.selectedCandidate.id}"
+                                 actionListener="#{candidateView.newCandidate}" style="margin-left:20px;">
+                    <p:resetInput target="editCandidate"/>
+                </p:commandButton>
 
-        <p:dialog header="Greeting" widgetVar="greetingDialog"
-                  modal="true" resizable="false">
-            <h:panelGrid id="greeting" columns="1" cellpadding="4">
-                <h:outputText value="Hello #{candidateView.candidate.firstName}" />
-                <h:outputText value="Number of candidates #{candidateView.noOfCandidates}" />
-            </h:panelGrid>
-        </p:dialog>
+            </p:panel>
 
-    </h:form>
+        </ui:define>
+    </ui:composition>
+
 </h:body>
+
 </html>

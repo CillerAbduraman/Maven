@@ -1,9 +1,18 @@
 package com.recruitmentprj.entities;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "CANDIDATES")
 @Access(AccessType.FIELD)
+@Data
+@EqualsAndHashCode(of = "id")
+@ToString(exclude = "candidateLanguages")
 public class Candidate {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -15,27 +24,9 @@ public class Candidate {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    public Long getId() {
-        return id;
-    }
+    @Embedded
+    private Contact contact = new Contact();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    @OneToMany(mappedBy = "candidate")
+    private List<CandidateLanguage> candidateLanguages;
 }

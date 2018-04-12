@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>PrimeFaces Hello World Example</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+
+<h:body>
+
+    <h:form id="form">
+        <p:growl id="growl" showDetail="false" sticky="true" />
+        <h:panelGrid styleClass="backgroundPanel"
+                     columnClasses="forty-percent top-alignment, sixty-percent top-alignment" columns="2" width="100%">
+            <p:tieredMenu style="width:200px">
+                <p:menuitem value="Candidates" icon="fa fa-fw fa-users" action="index">
+                </p:menuitem>
+                <p:menuitem value="Vacancies" icon="fa fa-fw fa-search-plus" action="vacancies">
+                </p:menuitem>
+            </p:tieredMenu>
+            <p:panel>
+                <div id="content">
+                    <ui:insert name="content">
+                    </ui:insert>
+                </div>
+
+
+            </p:panel>
+        </h:panelGrid>
+
+
+    </h:form>
+</h:body>
+</html>

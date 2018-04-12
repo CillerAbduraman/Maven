@@ -6,6 +6,8 @@ import com.recruitmentprj.services.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("candidateService")
 public class CandidateServiceImpl implements CandidateService {
 
@@ -13,8 +15,18 @@ public class CandidateServiceImpl implements CandidateService {
     private CandidateRepository candidateRepository;
 
     @Override
-    public void saveCandidate(Candidate candidate) {
-        candidateRepository.save(candidate);
+    public Candidate saveCandidate(Candidate candidate) {
+        return candidateRepository.save(candidate);
+    }
+
+    @Override
+    public List<Candidate> findAllCandidates() {
+        return candidateRepository.findAllByOrderByLastNameAscFirstNameAsc();
+    }
+
+    @Override
+    public void deleteCandidate(Long candidateId) {
+        candidateRepository.delete(candidateId);
     }
 
     @Override
