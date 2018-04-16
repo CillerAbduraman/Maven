@@ -30,6 +30,14 @@
                 <p:column headerText="Country">
                     <h:outputText value="#{candidate.contact.country}"/>
                 </p:column>
+                <p:column headerText="Gender">
+                    <h:outputText value="#{candidate.gender}"/>
+                </p:column>
+
+                <p:column headerText="Birth Date">
+                    <h:outputText value="#{candidate.birthDate}"/>
+                </p:column>
+
                 <f:facet name="footer">
                     <p:commandButton process="candidatesTable"
                                      update=":form:editCandidate" icon="fa-edit fa fa-fw"
@@ -50,17 +58,24 @@
                     <p:inputText id="first-name" value="#{candidateView.selectedCandidate.firstName}"
                                  required="true"
                                  requiredMessage="First Name is Mandatory!"/>
-                </h:panelGrid>
-                <h:panelGrid columns="2" cellpadding="10">
+
                     <h:outputText value="Last Name:*"/>
                     <p:inputText id="last-name" value="#{candidateView.selectedCandidate.lastName}"
                                  required="true"
                                  requiredMessage="Last Name is Mandatory!"/>
-                </h:panelGrid>
-                <h:panelGrid columns="2" cellpadding="10">
                     <h:outputText value="Country:"/>
                     <p:inputText id="country" value="#{candidateView.selectedCandidate.contact.country}"/>
+
+                    <h:outputText value="Birth Date:" />
+                    <p:calendar id="birthDate" value="#{candidateView.selectedCandidate.birthDate}" showOn="button" />
+
+                    <h:outputText value="Gender:" />
+                    <p:selectOneRadio id="gender" value="#{candidateView.selectedCandidate.gender}">
+                        <f:selectItem itemLabel="Female" itemValue="FEMALE" />
+                        <f:selectItem itemLabel="Male" itemValue="MALE" />
+                    </p:selectOneRadio>
                 </h:panelGrid>
+
                 <p:commandButton id="submit" value="Save" update=":form:candidatesTable,:form:growl,editCandidate"
                                  icon="fa-save fa fa-fw"
                                  partialSubmit="true"

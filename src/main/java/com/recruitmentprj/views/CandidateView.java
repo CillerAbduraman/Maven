@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "candidateView")
-@ViewScoped
-@Data
+@ViewScoped //cat un user este pe un anumit view; alta varianta SessionScoped
+@Data //lombok - plugin care se ocupa de getteri si setteri
 public class CandidateView {
 
-    @ManagedProperty("#{candidateService}")
+    @ManagedProperty("#{candidateService}") //Spring bean - accesul la baze de date in sb
     private CandidateService candidateService;
 
     private Candidate selectedCandidate = new Candidate();
 
-    private List<Candidate> candidates = new ArrayList<>();
+    private List<Candidate> candidates = new ArrayList<>(); // candidatii din bd
 
     private long noOfCandidates = 0;
 

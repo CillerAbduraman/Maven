@@ -17,9 +17,11 @@
         <h:panelGrid styleClass="backgroundPanel"
                      columnClasses="forty-percent top-alignment, sixty-percent top-alignment" columns="2" width="100%">
             <p:tieredMenu style="width:200px">
-                <p:menuitem value="Candidates" icon="fa fa-fw fa-users" action="index">
+                <p:menuitem value="Candidates" icon="fa fa-fw fa-users" action="index" update="growl">
                 </p:menuitem>
-                <p:menuitem value="Vacancies" icon="fa fa-fw fa-search-plus" action="vacancies">
+                <p:menuitem value="Vacancies" icon="fa fa-fw fa-search-plus" action="vacancies" update="growl">
+                </p:menuitem>
+                <p:menuitem value="Requisitions" icon="fa fa-fw fa-users" action="requisitions" update="growl">
                 </p:menuitem>
             </p:tieredMenu>
             <p:panel>
